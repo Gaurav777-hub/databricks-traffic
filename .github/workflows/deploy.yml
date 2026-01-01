@@ -1,0 +1,39 @@
+name: Databricks CI/CD
+
+on:
+  push:
+    branches:
+      - dev
+      - uat
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    # Dynamically map branch → environment
+    environment:
+      name: ${{ github.ref_name == 'dev' && 'dev-cicd' || github.ref_name == 'uat' && 'uat-cicd' || 'prod-cicd' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set environment variables
+        run: |
+          echo "DATABRICKS_HOST=${{ secrets.DATABRICKS_HOST }}" >> $GITHUB_ENV
+          echo "DATABRICKS_TOKEN=${{ secrets.DATABRICKS_TOKEN }}" >> $GITHUB_ENV
+          echo "DEPLOY_ENV=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Install Databricks CLI
+        run: |
+          pip install --upgrade pip
+          pip install databricks-cli
+
+      - name: Verify Databricks connectivity
+        run: |
+          databricks workspace ls /
+
+      - name: Deploy notebooks
+        run: |
+          databricks workspace import_dir notebooks /Shared/${{ env.DEPLOY_ENV }} --overwrite
