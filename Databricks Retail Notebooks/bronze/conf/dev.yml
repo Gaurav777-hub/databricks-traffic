@@ -2,7 +2,9 @@ env: dev
 
 storage:
   account: adlsstorage44
-  container: landing
+  landingcontainer: landing
+  checkpointcontainer: checkpoints
+  schemacontainer: metastoreroot
   bronze_container: bronze
 
 paths:
@@ -16,8 +18,8 @@ unity_catalog:
 
 autoloader:
   format: csv
-  checkpoint_base: /checkpoints/bronze_retail
-  schema_base: /schemas/bronze_retail
+  checkpoint_base: bronze_retail
+  schema_base: meta/bronze_retail
 
 
 # env: dev
