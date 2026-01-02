@@ -1,0 +1,42 @@
+env: dev
+
+storage:
+  account: adlsstorage44
+  container: landing
+  bronze_container: bronze
+
+paths:
+  customers: raw_customers
+  products: raw_products
+  orders: raw_orders
+
+unity_catalog:
+  catalog: dev_catalog
+  schema: bronze
+
+autoloader:
+  format: csv
+  checkpoint_base: /checkpoints/bronze_retail
+  schema_base: /schemas/bronze_retail
+
+
+# env: dev
+
+# storage:
+#   account: adlsstorage44
+#   container: landing
+#   bronze_container: bronze
+
+# paths:
+#   customers: https://adlsstorage44.blob.core.windows.net/landing/raw_customers/raw_customers
+#   products: https://adlsstorage44.blob.core.windows.net/landing/raw_customers/raw_products
+#   orders: https://adlsstorage44.blob.core.windows.net/landing/raw_customers/raw_orders
+
+# unity_catalog:
+#   catalog: dev_catalog
+#   schema: bronze
+
+# autoloader:
+#   format: csv
+#   checkpoint_base: /checkpoints/bronze_retail
+#   schema_base: /schemas/bronze_retail
